@@ -42,6 +42,7 @@ const formData: PivotTableQueryFormData = {
   width: 800,
   height: 600,
   combineMetric: false,
+  hideMetric: false,
   verboseMap: {},
   columnFormats: {},
   currencyFormats: {},

@@ -103,6 +103,17 @@ const config: ControlPanelConfig = {
         ],
         [
           {
+            name: 'hideMetric',
+            config: {
+              type: 'CheckboxControl',
+              label: t('Hide metric'),
+              default: false,
+              description: t('Whether metric is hidden'),
+            },
+          },
+        ],
+        [
+          {
             name: 'metricsLayout',
             config: {
               type: 'RadioButtonControl',

@@ -75,6 +75,7 @@ interface PivotTableCustomizeProps {
   columnFormats: JsonObject;
   currencyFormats: Record<string, Currency>;
   metricsLayout?: MetricsLayoutEnum;
+  hideMetric: boolean;
   metricColorFormatters: ColorFormatters;
   dateFormatters: Record<string, DateFormatter | undefined>;
   legacy_order_by: QueryFormMetric[] | QueryFormMetric | null;

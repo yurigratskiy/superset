@@ -115,6 +115,28 @@ export const Styles = styled.div`
       vertical-align: baseline;
     }
 
+    table.pvtTable.metric-hidden {
+      &,
+      tr,
+      th {
+        border: 1px solid rgb(224, 224, 224);
+        border-collapse: collapse;
+      }
+      thead {
+        tr:first-child {
+          display: none;
+        }
+        th.pvtTotalLabel {
+          display: none;
+        }
+      }
+      tbody {
+        td.pvtVal {
+          display: none;
+        }
+      }
+    }
+
     .pvtTotal,
     .pvtGrandTotal {
       font-weight: ${theme.typography.weights.bold};

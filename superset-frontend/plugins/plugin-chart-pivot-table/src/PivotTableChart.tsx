@@ -150,6 +150,7 @@ export default function PivotTableChart(props: PivotTableProps) {
     columnFormats,
     currencyFormats,
     metricsLayout,
+    hideMetric,
     metricColorFormatters,
     dateFormatters,
     onContextMenu,
@@ -541,6 +542,7 @@ export default function PivotTableChart(props: PivotTableProps) {
     <Styles height={height} width={width} margin={theme.gridUnit * 4}>
       <PivotTableWrapper>
         <PivotTable
+          class={hideMetric ? 'metric-hidden' : ''}
           data={unpivotedData}
           rows={rows}
           cols={cols}

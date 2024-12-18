@@ -916,7 +916,7 @@ export class TableRenderer extends Component {
 
     return (
       <Styles isDashboardEditMode={this.isDashboardEditMode()}>
-        <table className="pvtTable" role="grid">
+        <table className={`pvtTable ${this.props.class || ''}`} role="grid">
           <thead>
             {colAttrs.map((c, j) =>
               this.renderColHeaderRow(c, j, pivotSettings),

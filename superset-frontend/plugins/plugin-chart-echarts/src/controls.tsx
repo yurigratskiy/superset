@@ -191,7 +191,7 @@ const fromToTooltipControl: ControlSetItem = {
     type: 'CheckboxControl',
     label: t('From-To tooltip format'),
     renderTrigger: true,
-    default: true,
+    default: false,
     description: t('Calculate and use values from & to'),
     visibility: ({ controls }: ControlPanelsContainerProps) =>
       Boolean(controls?.rich_tooltip?.value),
