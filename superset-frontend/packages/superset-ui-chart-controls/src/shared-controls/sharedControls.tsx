@@ -388,6 +388,24 @@ const connect_points: SharedControlConfig<'CheckboxControl'> = {
     Boolean(controls?.seriesType?.value === EchartsTimeseriesSeriesType.Line),
 };
 
+const x_axis_data_collapse: SharedControlConfig<'CheckboxControl'> = {
+  type: 'CheckboxControl',
+  label: t('Collapse x axis'),
+  default: false,
+  description: t('Remove x axis gaps'),
+  visibility: ({ controls }) =>
+    Boolean(controls?.seriesType?.value === EchartsTimeseriesSeriesType.Line),
+};
+
+const metric_as_increments: SharedControlConfig<'CheckboxControl'> = {
+  type: 'CheckboxControl',
+  label: t('Metric as increments'),
+  default: false,
+  description: t('Metric values as increments'),
+  visibility: ({ controls }) =>
+    Boolean(controls?.seriesType?.value === EchartsTimeseriesSeriesType.Line),
+};
+
 const temporal_columns_lookup: SharedControlConfig<'HiddenControl'> = {
   type: 'HiddenControl',
   initialValue: (control: ControlState, state: ControlPanelState | null) =>
@@ -445,6 +463,8 @@ export default {
   show_empty_columns,
   waterfall_view,
   connect_points,
+  x_axis_data_collapse,
+  metric_as_increments,
   temporal_columns_lookup,
   currency_format,
   sort_by_metric,

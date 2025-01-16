@@ -42,6 +42,8 @@ const controlsWithoutXAxis: ControlSetRow[] = [
   ['show_empty_columns'],
   ['waterfall_view'],
   ['connect_points'],
+  ['metric_as_increments'],
+  ['x_axis_data_collapse'],
 ];
 
 export const echartsTimeSeriesQuery: ControlPanelSectionConfig = {

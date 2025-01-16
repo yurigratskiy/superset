@@ -53,6 +53,7 @@ const {
   rowLimit,
   seriesType,
   truncateYAxis,
+  yAxisInvert,
   yAxisBounds,
   zoomable,
 } = DEFAULT_FORM_DATA;
@@ -214,6 +215,18 @@ const config: ControlPanelConfig = {
         ],
         [truncateXAxis],
         [xAxisBounds],
+        [
+          {
+            name: 'yAxisInvert',
+            config: {
+              type: 'CheckboxControl',
+              label: t('Invert Axis'),
+              default: yAxisInvert,
+              renderTrigger: true,
+              description: t('Invert Y Axis'),
+            },
+          },
+        ],
         [
           {
             name: 'truncateYAxis',

@@ -267,7 +267,7 @@ export function extractSeries(
     xAxisSortSeries?: SortSeriesType;
     xAxisSortSeriesAscending?: boolean;
   } = {},
-): [SeriesOption[], number[], number | undefined] {
+): [(SeriesOption & { originId: string })[], number[], number | undefined] {
   const {
     fillNeighborValue,
     xAxis = DTTM_ALIAS,
@@ -310,6 +310,7 @@ export function extractSeries(
   let minPositiveValue: number | undefined;
   const finalSeries = sortedSeries.map(name => ({
     id: name,
+    originId: name,
     name,
     data: sortedRows
       .map(({ row, totalStackedValue }, idx) => {

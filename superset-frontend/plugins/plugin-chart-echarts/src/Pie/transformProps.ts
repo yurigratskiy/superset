@@ -157,6 +157,7 @@ export default function transformProps(
     currencyFormat,
     dateFormat,
     outerRadius,
+    tooltipPercentVisibility,
     showLabels,
     showLegend,
     showLabelsThreshold,
@@ -394,7 +395,11 @@ export default function transformProps(
           sanitizeName: true,
         });
         return tooltipHtml(
-          [[metricLabel, formattedValue, formattedPercent]],
+          [
+            tooltipPercentVisibility
+              ? [metricLabel, formattedValue, formattedPercent]
+              : [metricLabel, formattedValue],
+          ],
           name,
         );
       },

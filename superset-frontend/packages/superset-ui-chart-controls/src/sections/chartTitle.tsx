@@ -19,7 +19,11 @@
 import { t } from '@superset-ui/core';
 
 import { ControlSubSectionHeader } from '../components/ControlSubSectionHeader';
-import { ControlPanelSectionConfig } from '../types';
+import {
+  ControlPanelsContainerProps,
+  ControlPanelSectionConfig,
+  ControlStateMapping,
+} from '../types';
 import { formatSelectOptions } from '../utils';
 
 export const TITLE_MARGIN_OPTIONS: number[] = [
@@ -102,6 +106,33 @@ export const titleControls: ControlPanelSectionConfig = {
           default: TITLE_POSITION_OPTIONS[0][0],
           choices: TITLE_POSITION_OPTIONS,
           description: t('Changing this control takes effect instantly'),
+        },
+      },
+    ],
+    [
+      {
+        name: 'x_axis_title_suffix',
+        config: {
+          type: 'SelectControl',
+          clearable: true,
+          label: t('Axis suffix value'),
+          renderTrigger: true,
+          mapStateToProps: ({
+            controls,
+          }: {
+            controls: ControlStateMapping;
+          }) => ({
+            choices:
+              (controls?.adhoc_filters?.value as []).map((x: any) => [
+                x.subject,
+                x.subject,
+              ]) || [],
+          }),
+          description: t(
+            'Axis suffix. Value dynamically forming from "Filters"',
+          ),
+          visibility: ({ controls }: ControlPanelsContainerProps) =>
+            (controls.viz_type.value as string).includes('echarts_timeseries'),
         },
       },
     ],

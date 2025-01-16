@@ -30,7 +30,7 @@ import {
   ControlStateMapping,
 } from '@superset-ui/chart-controls';
 import { DEFAULT_FORM_DATA } from './types';
-import { legendSection } from '../controls';
+import { legendSection, tooltipPercentVisibilityControl } from '../controls';
 
 const {
   donut,
@@ -104,6 +104,8 @@ const config: ControlPanelConfig = {
         ],
         ...legendSection,
         // eslint-disable-next-line react/jsx-key
+        [<ControlSubSectionHeader>{t('Tooltip')}</ControlSubSectionHeader>],
+        [tooltipPercentVisibilityControl],
         [<ControlSubSectionHeader>{t('Labels')}</ControlSubSectionHeader>],
         [
           {

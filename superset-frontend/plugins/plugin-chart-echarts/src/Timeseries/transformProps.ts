@@ -167,6 +167,8 @@ export default function transformProps(
     disableSanitizeHtml,
     seriesType,
     connectPoints,
+    metricAsIncrements,
+    xAxisDataCollapse,
     waterfallView,
     showLegend,
     showValue,
@@ -179,6 +181,7 @@ export default function transformProps(
     stack,
     tooltipTimeFormat,
     tooltipSortByMetric,
+    tooltipPercentVisibility,
     truncateXAxis,
     truncateYAxis,
     xAxis: xAxisOrig,
@@ -190,6 +193,7 @@ export default function transformProps(
     xAxisTimeFormat,
     xAxisTitle,
     xAxisTitleMargin,
+    xAxisTitleSuffix,
     yAxisBounds,
     yAxisFormat,
     currencyFormat,
@@ -277,10 +281,11 @@ export default function transformProps(
     legendState,
   });
   if (groupByHidden !== undefined) {
+    const hiddenGroup = groupByHidden + (metrics.length > 1 ? 1 : 0);
     rawSeries.forEach(option => {
       const displayLabel = labelMap[option.id as string]
-        .filter((_: any, i: number) => i !== formData.groupByHidden)
-        .join();
+        .filter((_: any, i: number) => i !== hiddenGroup)
+        .join(', ');
       // eslint-disable-next-line no-param-reassign
       option.id = displayLabel;
       // eslint-disable-next-line no-param-reassign
@@ -334,6 +339,8 @@ export default function transformProps(
     }
   };
 
+  const currentMetricIncrement = Array(2).fill(0);
+  const currentXAsisIncrement = Array(2).fill(null);
   rawSeries.forEach(entry => {
     const derivedSeries = isDerivedSeries(entry, chartProps.rawFormData);
     const lineStyle: LineStyleOption = {};
@@ -354,9 +361,45 @@ export default function transformProps(
     const seriesName = inverted[entryName] || entryName;
     const colorScaleKey = getOriginalSeries(seriesName, array);
 
-    if (connectPoints && seriesType === EchartsTimeseriesSeriesType.Line) {
+    if (
+      (connectPoints || xAxisDataCollapse) &&
+      seriesType === EchartsTimeseriesSeriesType.Line
+    ) {
       // eslint-disable-next-line no-param-reassign
-      entry.data = (entry.data as any).filter((en: any[]) => en[1]);
+      entry.data = (entry.data as any).filter((en: any[]) => en[1] != null);
+    }
+    const incrementIndex =
+      metrics.length > 1
+        ? metrics.findIndex(
+            metric =>
+              (metric as { label: string }).label ===
+              labelMap[entry.originId as string][0],
+          )
+        : 0;
+    if (xAxisDataCollapse && seriesType === EchartsTimeseriesSeriesType.Line) {
+      if ((entry.data as []).length) {
+        if (currentXAsisIncrement[incrementIndex] !== null) {
+          const diff =
+            (entry.data as []).at(0)![0] -
+            currentXAsisIncrement[incrementIndex];
+          if (diff) {
+            (entry.data as []).forEach((dataItem: number[]) => {
+              // eslint-disable-next-line no-param-reassign
+              dataItem[0] -= diff;
+            });
+          }
+        }
+        currentXAsisIncrement[incrementIndex] = (entry.data as []).at(-1)![0];
+      }
+    }
+    if (metricAsIncrements && seriesType === EchartsTimeseriesSeriesType.Line) {
+      (entry.data as any).forEach((en: any[]) => {
+        if (en[1] !== null) {
+          currentMetricIncrement[incrementIndex] += en[1];
+          // eslint-disable-next-line no-param-reassign
+          en[1] = currentMetricIncrement[incrementIndex];
+        }
+      });
     }
     const transformedSeries = transformSeries(
       entry,
@@ -549,9 +592,20 @@ export default function transformProps(
     ?.filter(Boolean)
     .join(', ');
 
+  const xAxisNameComputed = [xAxisTitle]
+    .concat(
+      adhocFilters?.find((x: any) => x.subject === xAxisTitleSuffix)
+        ?.comparator,
+    )
+    .concat(
+      extraFormData.filters?.find((x: any) => x.col === xAxisTitleSuffix)?.val,
+    )
+    ?.filter(Boolean)
+    .join(', ');
+
   let xAxis: any = {
     type: xAxisType,
-    name: xAxisTitle,
+    name: xAxisNameComputed,
     nameGap: convertInteger(xAxisTitleMargin),
     nameLocation: 'middle',
     axisLabel: {
@@ -648,7 +702,8 @@ export default function transformProps(
           0,
         );
         const showTotal = Boolean(isMultiSeries) && richTooltip && !isForecast;
-        const showPercentage = showTotal && !forcePercentFormatter;
+        const showPercentage =
+          showTotal && !forcePercentFormatter && tooltipPercentVisibility;
         const keys = Object.keys(forecastValues);
         let focusedRow;
         let cumulativeObservation = 0;

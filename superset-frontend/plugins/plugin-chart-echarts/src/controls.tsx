@@ -25,6 +25,7 @@ import {
   DEFAULT_SORT_SERIES_DATA,
   SORT_SERIES_CHOICES,
   sharedControls,
+  CustomControlItem,
 } from '@superset-ui/chart-controls';
 import { DEFAULT_LEGEND_FORM_DATA, StackControlOptions } from './constants';
 import { DEFAULT_FORM_DATA } from './Timeseries/constants';
@@ -235,12 +236,28 @@ const tooltipSortByMetricControl: ControlSetItem = {
   },
 };
 
+export const tooltipPercentVisibilityControl: CustomControlItem = {
+  name: 'tooltipPercentVisibility',
+  config: {
+    type: 'CheckboxControl',
+    label: t('Percent column visible'),
+    renderTrigger: true,
+    default: true,
+    description: t('Whether percent column is visible.'),
+    visibility: ({ controls }: ControlPanelsContainerProps) =>
+      (Boolean(controls?.rich_tooltip?.value) &&
+        (controls.viz_type.value as string).includes('echarts_timeseries')) ||
+      controls.viz_type.value === 'pie',
+  },
+};
+
 export const richTooltipSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Tooltip')}</ControlSubSectionHeader>],
   [richTooltipControl],
   [fromToTooltipControl],
   [useHtmlTooltipControl],
   [tooltipSortByMetricControl],
+  [tooltipPercentVisibilityControl],
   [tooltipTimeFormatControl],
 ];
 
