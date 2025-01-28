@@ -163,6 +163,7 @@ export default function transformProps(
     orientation,
     percentageThreshold,
     richTooltip,
+    showTotalTooltip,
     fromToTooltip,
     disableSanitizeHtml,
     seriesType,
@@ -191,6 +192,8 @@ export default function transformProps(
     xAxisSortSeries,
     xAxisSortSeriesAscending,
     xAxisTimeFormat,
+    xAxisNumberFormat,
+    xAxisTooltipNumberFormat,
     xAxisTitle,
     xAxisTitleMargin,
     xAxisTitleSuffix,
@@ -544,11 +547,15 @@ export default function transformProps(
   const tooltipFormatter =
     xAxisDataType === GenericDataType.Temporal
       ? getTooltipTimeFormatter(tooltipTimeFormat)
-      : String;
+      : xAxisDataType === GenericDataType.Numeric
+        ? getNumberFormatter(xAxisTooltipNumberFormat)
+        : String;
   const xAxisFormatter =
     xAxisDataType === GenericDataType.Temporal
       ? getXAxisFormatter(xAxisTimeFormat)
-      : String;
+      : xAxisDataType === GenericDataType.Numeric
+        ? getNumberFormatter(xAxisNumberFormat)
+        : String;
 
   const {
     setDataMask = () => {},
@@ -701,7 +708,11 @@ export default function transformProps(
             value.observation !== undefined ? acc + value.observation : acc,
           0,
         );
-        const showTotal = Boolean(isMultiSeries) && richTooltip && !isForecast;
+        const showTotal =
+          Boolean(isMultiSeries) &&
+          richTooltip &&
+          !isForecast &&
+          showTotalTooltip;
         const showPercentage =
           showTotal && !forcePercentFormatter && tooltipPercentVisibility;
         const keys = Object.keys(forecastValues);

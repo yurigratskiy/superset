@@ -21,6 +21,7 @@ import {
   AnnotationLayer,
   AxisType,
   ContributionType,
+  NumberFormatter,
   QueryFormData,
   QueryFormMetric,
   TimeFormatter,
@@ -105,7 +106,7 @@ export type TimeseriesChartTransformedProps =
     ContextMenuTransformedProps &
     CrossFilterTransformedProps & {
       legendData?: OptionName[];
-      xValueFormatter: TimeFormatter | StringConstructor;
+      xValueFormatter: TimeFormatter | StringConstructor | NumberFormatter;
       xAxis: {
         label: string;
         type: AxisType;

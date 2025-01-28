@@ -183,8 +183,26 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'x_axis_number_format',
+            config: {
+              label: t('Number format'),
+              ...sharedControls.x_axis_number_format,
+            },
+          },
+        ],
         [xAxisLabelRotation],
         ...richTooltipSection,
+        [
+          {
+            name: 'x_axis_tooltip_number_format',
+            config: {
+              label: t('Tooltip number format'),
+              ...sharedControls.x_axis_number_format,
+            },
+          },
+        ],
         // eslint-disable-next-line react/jsx-key
         [<ControlSubSectionHeader>{t('Y Axis')}</ControlSubSectionHeader>],
         ['y_axis_format'],

@@ -199,6 +199,19 @@ const fromToTooltipControl: ControlSetItem = {
   },
 };
 
+const showTotalTooltipControl: ControlSetItem = {
+  name: 'show_total_tooltip',
+  config: {
+    type: 'CheckboxControl',
+    label: t('Show total'),
+    renderTrigger: true,
+    default: true,
+    description: t('Whether display total value in tooltip.'),
+    visibility: ({ controls }: ControlPanelsContainerProps) =>
+      Boolean(controls?.rich_tooltip?.value),
+  },
+};
+
 const useHtmlTooltipControl: ControlSetItem = {
   name: 'disable_sanitize_html',
   config: {
@@ -245,7 +258,9 @@ export const tooltipPercentVisibilityControl: CustomControlItem = {
     default: true,
     description: t('Whether percent column is visible.'),
     visibility: ({ controls }: ControlPanelsContainerProps) =>
-      (Boolean(controls?.rich_tooltip?.value) &&
+      (Boolean(
+        controls?.rich_tooltip?.value && controls?.show_total_tooltip?.value,
+      ) &&
         (controls.viz_type.value as string).includes('echarts_timeseries')) ||
       controls.viz_type.value === 'pie',
   },
@@ -254,6 +269,7 @@ export const tooltipPercentVisibilityControl: CustomControlItem = {
 export const richTooltipSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Tooltip')}</ControlSubSectionHeader>],
   [richTooltipControl],
+  [showTotalTooltipControl],
   [fromToTooltipControl],
   [useHtmlTooltipControl],
   [tooltipSortByMetricControl],
