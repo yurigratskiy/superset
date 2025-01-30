@@ -539,7 +539,7 @@ export default function PivotTableChart(props: PivotTableProps) {
   );
 
   return (
-    <Styles height={height} width={width} margin={theme.gridUnit * 4}>
+    <Styles height={height} width={width} margin={theme.gridUnit * 4 * 0}>
       <PivotTableWrapper>
         <PivotTable
           class={hideMetric ? 'metric-hidden' : ''}
