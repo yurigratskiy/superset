@@ -12364,6 +12364,9 @@ msgstr ""
 msgid "Unexpected time range: %(error)s"
 msgstr "Неожиданный диапазон времени: %(error)s"
 
+msgid "Unexpected time range: From date cannot be larger than to date"
+msgstr "Неожиданный диапазон времени: Дата начала не может быть позже даты конца"
+
 msgid "Unknown"
 msgstr "Неизвестно"
 

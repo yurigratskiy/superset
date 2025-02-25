@@ -326,7 +326,7 @@ export default function DateFilterLabel(props: DateFilterControlProps) {
         {!validTimeRange && (
           <IconWrapper className="warning">
             <Icons.ErrorSolidSmall iconColor={theme.colors.error.base} />
-            <span className="text error">{evalResponse}</span>
+            <span className="text error">{t(evalResponse)}</span>
           </IconWrapper>
         )}
       </div>

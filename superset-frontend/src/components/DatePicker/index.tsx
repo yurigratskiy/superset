@@ -20,6 +20,7 @@ import { DatePicker as AntdDatePicker } from 'antd';
 import { styled } from '@superset-ui/core';
 
 const AntdRangePicker = AntdDatePicker.RangePicker;
+AntdDatePicker.defaultProps = { format: 'DD.MM.YYYY HH:mm:ss' };
 
 export const RangePicker = styled(AntdRangePicker)`
   border-radius: ${({ theme }) => theme.gridUnit}px;

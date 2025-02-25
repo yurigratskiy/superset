@@ -29,8 +29,16 @@ export const SEPARATOR = ' : ';
 export const buildTimeRangeString = (since: string, until: string): string =>
   `${since}${SEPARATOR}${until}`;
 
-const formatDateEndpoint = (dttm: string, isStart?: boolean): string =>
-  dttm.replace('T00:00:00', '') || (isStart ? '-∞' : '∞');
+const formatDateEndpoint = (dttm: string, isStart?: boolean): string => {
+  if (dttm) {
+    const date = new Date(dttm);
+    return `${date.toLocaleDateString('ru-RU')} ${date.toLocaleTimeString('ru-RU')}`.replace(
+      ' 00:00:00',
+      '',
+    );
+  }
+  return isStart ? '-∞' : '∞';
+};
 
 export const formatTimeRange = (
   timeRange: string,

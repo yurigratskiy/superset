@@ -645,9 +645,11 @@ export class TableRenderer extends Component {
           : null;
 
         const headerCellFormattedValue =
-          dateFormatters && dateFormatters[rowAttrs[i]]
-            ? dateFormatters[rowAttrs[i]](r)
-            : r;
+          r !== null
+            ? dateFormatters && dateFormatters[rowAttrs[i]]
+              ? dateFormatters[rowAttrs[i]](r)
+              : r
+            : '';
         return (
           <th
             key={`rowKeyLabel-${i}`}
