@@ -60,8 +60,11 @@ export const createFilterKey = (
     jsonPayload: { value },
   })
     .then(r => {
-      postMessage("native_filters_key", r.json.key as string);
-      return r.json.key as string
+      window.parent.postMessage(
+        { type: 'native_filters_key', key: r.json.key },
+        '*',
+      );
+      return r.json.key as string;
     })
     .catch(err => {
       logging.error(err);
