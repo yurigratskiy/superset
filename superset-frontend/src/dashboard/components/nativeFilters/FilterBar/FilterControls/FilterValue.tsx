@@ -179,6 +179,10 @@ const FilterValue: FC<FilterControlProps> = ({
         ownState: filterOwnState,
       })
         .then(({ response, json }) => {
+          window.parent.postMessage(
+            { type: 'formData', key: newFormData },
+            '*',
+          );
           if (isFeatureEnabled(FeatureFlag.GlobalAsyncQueries)) {
             // deal with getChartDataRequest transforming the response data
             const result = 'result' in json ? json.result[0] : json;
