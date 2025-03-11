@@ -172,6 +172,11 @@ const v1ChartDataRequest = async (
     ownState,
   });
 
+  window.parent.postMessage(
+    { type: 'chart_queries', key: payload.queries },
+    '*',
+  );
+
   // The dashboard id is added to query params for tracking purposes
   const { slice_id: sliceId } = formData;
   const { dashboard_id: dashboardId } = requestParams;
