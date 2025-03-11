@@ -59,13 +59,7 @@ export const createFilterKey = (
     endpoint: assembleEndpoint(dashId, undefined, tabId),
     jsonPayload: { value },
   })
-    .then(r => {
-      window.parent.postMessage(
-        { type: 'native_filters_key', key: r.json.key },
-        '*',
-      );
-      return r.json.key as string;
-    })
+    .then(r => r.json.key as string)
     .catch(err => {
       logging.error(err);
       return null;
